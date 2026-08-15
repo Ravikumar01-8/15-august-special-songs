@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>15 August Special Songs — Curated by Ravi Kumar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rozha+One&family=Baloo+2:wght@400;500;600;700&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital@1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --saffron:#e07a2b;
+  --saffron2:#f4a94a;
+  --white:#f6ecd9;
+  --green:#1f6e4a;
+  --green2:#2f8f5f;
+  --navy:#1c2b52;
+  --brown:#2a1710;
+  --cream:#f3e2c4;
+  --glass-border:rgba(244,169,74,0.32);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;height:100%;}
+body{
+  font-family:'Baloo 2', sans-serif;
+  color:var(--cream);
+  overflow-x:hidden;
+  min-height:100vh;
+  position:relative;
+  background:#1a130b;
+  -webkit-font-smoothing:antialiased;
+  scroll-behavior:smooth;
+}
+
+/* ================= BACKGROUND SCENE ================= */
+.scene{ position:fixed; inset:0; z-index:0; overflow:hidden; }
+.scene svg{ width:100%; height:100%; display:block; }
+
+.light-wash{
+  position:fixed; inset:0; z-index:1; pointer-events:none;
+  background:
+    radial-gradient(ellipse 60% 50% at 68% 62%, rgba(244,169,74,0.30) 0%, transparent 62%),
+    linear-gradient(180deg, rgba(20,10,7,0.02) 0%, rgba(18,9,6,0.28) 55%, rgba(10,6,4,0.82) 100%);
+}
+.rays{
+  position:fixed; inset:0; z-index:1; pointer-events:none; opacity:0.3; mix-blend-mode:screen;
+  background:repeating-conic-gradient(from 210deg at 68% 55%, rgba(244,169,74,0.14) 0deg 4deg, transparent 4deg 12deg);
+  animation:raySwing 20s ease-in-out infinite alternate;
+}
+@keyframes raySwing{ 0%{ transform:rotate(-3deg);} 100%{ transform:rotate(3deg);} }
+.grain{
+  position:fixed; inset:0; z-index:2; pointer-events:none; mix-blend-mode:overlay; opacity:0.45;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+}
+.vignette{ position:fixed; inset:0; z-index:3; pointer-events:none; box-shadow: inset 0 0 220px 60px rgba(8,4,3,0.7); }
+
+/* ambient particles: petals + chakra motes */
+.ambient{ position:fixed; inset:0; z-index:4; pointer-events:none; overflow:hidden; }
+.petal{
+  position:absolute; width:10px; height:14px; opacity:0.75;
+  border-radius:60% 40% 60% 40% / 60% 60% 40% 40%;
+  animation:petalFall linear infinite;
+}
+@keyframes petalFall{
+  0%{ transform:translateY(-8vh) translateX(0) rotate(0deg); opacity:0; }
+  10%{ opacity:0.8; }
+  90%{ opacity:0.6; }
+  100%{ transform:translateY(108vh) translateX(60px) rotate(340deg); opacity:0; }
+}
+.chakramote{
+  position:absolute; border-radius:50%;
+  border:1.5px dashed rgba(28,43,82,0.55);
+  opacity:0.5; animation:moteRise linear infinite;
+}
+@keyframes moteRise{
+  0%{ transform:translateY(10vh) rotate(0deg) scale(0.7); opacity:0; }
+  15%{ opacity:0.55; }
+  85%{ opacity:0.3; }
+  100%{ transform:translateY(-100vh) rotate(200deg) scale(1); opacity:0; }
+}
+
+/* confetti burst layer (interaction + first load) */
+.confetti-layer{ position:fixed; inset:0; z-index:800; pointer-events:none; overflow:hidden; }
+.confetti{ position:absolute; top:40%; width:8px; height:14px; opacity:0.95; animation:confettiFall linear forwards; }
+@keyframes confettiFall{
+  0%{ transform:translateY(0) rotate(0deg); opacity:1; }
+  90%{ opacity:1; }
+  100%{ transform:translateY(70vh) rotate(540deg); opacity:0; }
+}
+.note{
+  position:absolute; font-size:1.3rem; opacity:0; pointer-events:none;
+  animation:noteFloat 2s ease-out forwards;
+}
+@keyframes noteFloat{
+  0%{ opacity:0; transform:translateY(0) scale(0.6) rotate(0deg); }
+  15%{ opacity:1; }
+  100%{ opacity:0; transform:translateY(-160px) scale(1.1) rotate(18deg); }
+}
+
+/* ================= LAYOUT ================= */
+.wrap{
+  position:relative; z-index:6;
+  min-height:100vh;
+  display:flex; flex-direction:column;
+}
+.hero{
+  flex:1;
+  display:flex; align-items:center; justify-content:center;
+  gap:4vw;
+  padding:9vh 6vw 4vh;
+  flex-wrap:wrap;
+}
+
+/* ---- Flag stage (left) ---- */
+.flag-stage{
+  flex:1 1 380px;
+  max-width:520px;
+  display:flex; flex-direction:column; align-items:center;
+  cursor:pointer; user-select:none; -webkit-tap-highlight-color:transparent;
+}
+.flag-stage svg{ width:100%; height:auto; display:block; filter:drop-shadow(0 20px 35px rgba(0,0,0,0.5)); }
+.fx-layer{ position:relative; width:100%; height:0; }
+.ripple{
+  position:absolute; width:60px; height:60px; border-radius:50%;
+  top:-160px; left:22%; transform:translate(-50%,-50%) scale(0.5); opacity:0;
+  border:3px solid transparent;
+  border-image:linear-gradient(90deg, var(--saffron2), var(--white), var(--green2)) 1;
+  pointer-events:none;
+}
+.ripple.go{ animation:rippleOut 1.2s ease-out; }
+@keyframes rippleOut{
+  0%{ opacity:0.85; transform:translate(-50%,-50%) scale(0.5); }
+  100%{ opacity:0; transform:translate(-50%,-50%) scale(6); }
+}
+.stage-hint{
+  margin-top:1.2em; display:flex; align-items:center; gap:0.5em;
+  font-family:'Space Mono', monospace; font-size:0.72rem; letter-spacing:0.03em;
+  color:var(--cream); opacity:0.85; text-align:center;
+}
+.stage-hint b{ color:var(--saffron2); }
+.stage-hint svg{ width:16px; height:16px; fill:var(--cream); opacity:0.8; }
+
+/* ---- Text content (right) ---- */
+.content{
+  flex:1 1 420px;
+  max-width:620px;
+  display:flex; flex-direction:column;
+  align-items:flex-start;
+  text-align:left;
+}
+.eyebrow-line{
+  display:flex; align-items:center; gap:0.8em;
+  font-family:'Space Mono', monospace; font-size:0.72rem; letter-spacing:0.35em;
+  color:var(--cream); opacity:0.75; margin-bottom:0.8em;
+  animation:fadeIn 1s ease both;
+}
+.eyebrow-line::before, .eyebrow-line::after{ content:""; width:26px; height:1px; background:rgba(243,226,196,0.5); }
+h1{
+  font-family:'Rozha One', serif;
+  font-size:clamp(2.6rem, 6.4vw, 4.6rem);
+  margin:0; line-height:1.02;
+  letter-spacing:0.01em;
+  animation:titleIn 1.3s cubic-bezier(.2,.8,.2,1) both;
+}
+h1 .num{ color:var(--saffron2); text-shadow:0 0 40px rgba(244,169,74,0.35); }
+h1 .aug{ color:var(--white); text-shadow:0 0 40px rgba(246,236,217,0.3); }
+h1 .rest{
+  display:block; font-size:0.62em; letter-spacing:0.28em; margin-top:0.15em;
+  color:var(--green2); text-shadow:0 0 30px rgba(47,143,95,0.3);
+}
+@keyframes titleIn{
+  from{ opacity:0; transform:translateY(16px); letter-spacing:0.1em; }
+  to{ opacity:1; transform:translateY(0); letter-spacing:0.01em; }
+}
+@keyframes fadeIn{ from{opacity:0;} to{opacity:1;} }
+
+.subtitle{
+  font-family:'Cormorant Garamond', serif; font-style:italic;
+  font-size:clamp(1.1rem, 2.2vw, 1.5rem);
+  margin-top:0.9em; color:var(--cream); opacity:0.92;
+}
+.subtitle .name{
+  font-style:normal; font-weight:700;
+  background:linear-gradient(90deg, var(--saffron2) 0%, var(--white) 50%, var(--green2) 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  text-shadow:0 0 24px rgba(244,169,74,0.3);
+  padding:0 0.1em;
+}
+.divider{
+  display:flex; align-items:center; gap:0.7em; margin:1.1em 0;
+  width:100%; max-width:340px;
+}
+.divider span{ flex:1; height:1px; background:linear-gradient(90deg, var(--saffron2), transparent); }
+.divider span.right{ background:linear-gradient(90deg, transparent, var(--green2)); }
+.divider .chakra-mini{ width:16px; height:16px; }
+
+.badge{
+  display:inline-flex; align-items:center; gap:0.5em;
+  font-family:'Space Mono', monospace; font-size:0.7rem; letter-spacing:0.06em;
+  padding:0.55em 1.1em; border-radius:999px;
+  border:1px solid rgba(244,169,74,0.4);
+  background:linear-gradient(90deg, rgba(224,122,43,0.16), rgba(31,110,74,0.16));
+  color:var(--cream); margin-top:0.3em;
+}
+
+/* ---- quote ---- */
+.quote-box{
+  margin-top:2em; max-width:460px; padding:1.1em 1.4em; text-align:left;
+  background:rgba(20,10,7,0.4); border:1px solid rgba(244,169,74,0.2);
+  border-left:3px solid var(--saffron2);
+  border-radius:10px; backdrop-filter:blur(6px);
+}
+#quote{
+  font-family:'Cormorant Garamond', serif; font-style:italic;
+  font-size:clamp(1rem, 2vw, 1.22rem); color:var(--cream);
+  opacity:0; transform:translateY(6px); transition:opacity 0.7s ease, transform 0.7s ease;
+}
+#quote.show{ opacity:0.95; transform:translateY(0); }
+#quote-tag{
+  display:block; margin-top:0.5em; font-family:'Space Mono', monospace;
+  font-size:0.64rem; color:var(--saffron2); opacity:0.7; font-style:normal;
+}
+
+footer.spacer{ height:210px; }
+
+/* ================= MUSIC PLAYER ================= */
+.player{
+  position:fixed; left:50%; bottom:20px; transform:translateX(-50%);
+  width:min(94vw, 660px); z-index:1000;
+  background:linear-gradient(135deg, rgba(50,30,14,0.68), rgba(18,10,7,0.72));
+  border:1px solid var(--glass-border); border-radius:22px;
+  backdrop-filter:blur(20px) saturate(150%); -webkit-backdrop-filter:blur(20px) saturate(150%);
+  box-shadow:0 20px 50px rgba(0,0,0,0.55), 0 0 40px rgba(224,122,43,0.16), inset 0 1px 0 rgba(255,255,255,0.06);
+  padding:14px 20px 14px;
+}
+.player-top{ display:flex; align-items:center; gap:14px; }
+.disc-thumb{
+  flex:0 0 auto; width:46px; height:46px; border-radius:50%;
+  background:radial-gradient(circle at 35% 35%, #2a3a5a, #10151f 70%);
+  border:2px solid var(--saffron2);
+  display:flex; align-items:center; justify-content:center;
+  animation:spin 4s linear infinite paused;
+}
+.player.is-playing .disc-thumb{ animation-play-state:running; }
+.disc-thumb::after{ content:""; width:8px; height:8px; border-radius:50%; background:var(--green2); }
+@keyframes spin{ to{ transform:rotate(360deg); } }
+
+.track-info{ flex:1 1 auto; min-width:0; }
+.track-name-wrap{ overflow:hidden; white-space:nowrap; }
+#track-name{ font-family:'Baloo 2', sans-serif; font-weight:600; font-size:0.88rem; color:var(--cream); }
+.track-sub{ font-family:'Space Mono', monospace; font-size:0.6rem; letter-spacing:0.05em; color:var(--saffron2); opacity:0.8; margin-top:1px; }
+
+.controls{ display:flex; align-items:center; gap:9px; flex:0 0 auto; }
+.controls button{
+  background:rgba(255,255,255,0.06); border:1px solid var(--glass-border); color:var(--cream);
+  width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:background 0.2s ease, transform 0.15s ease;
+}
+.controls button:hover{ background:rgba(244,169,74,0.25); transform:translateY(-1px); }
+.controls button:active{ transform:scale(0.9); }
+#playPause{ width:42px; height:42px; background:linear-gradient(135deg, var(--saffron2), var(--green2)); border:none; }
+.controls svg{ width:15px; height:15px; fill:var(--cream); }
+
+.progress-row{ display:flex; align-items:center; gap:8px; margin-top:11px; }
+.time{ font-family:'Space Mono', monospace; font-size:0.62rem; color:var(--saffron2); opacity:0.8; width:36px; text-align:center; }
+.progress-track{ flex:1; height:5px; background:rgba(255,255,255,0.14); border-radius:3px; overflow:hidden; cursor:pointer; position:relative; }
+#progress-fill{ height:100%; width:0%; background:linear-gradient(90deg, var(--saffron2), var(--white), var(--green2)); border-radius:3px; transition:width 0.25s linear; }
+.status-line{ text-align:center; font-family:'Space Mono', monospace; font-size:0.58rem; color:var(--saffron2); opacity:0.65; margin-top:8px; letter-spacing:0.04em; }
+#yt-player-holder{ position:absolute; width:1px; height:1px; overflow:hidden; opacity:0; pointer-events:none; }
+
+@media (max-width: 860px){
+  .hero{ flex-direction:column; padding-top:6vh; }
+  .content{ align-items:center; text-align:center; }
+  .eyebrow-line, .subtitle, .divider, .quote-box{ align-self:center; }
+  .divider{ margin-left:auto; margin-right:auto; }
+}
+@media (max-width:480px){
+  .player{ padding:12px 14px 12px; border-radius:18px; }
+  footer.spacer{ height:190px; }
+  .quote-box{ padding:0.9em 1.1em; }
+}
+::selection{ background:var(--saffron2); color:var(--brown); }
+</style>
+</head>
+<body>
+
+<div class="scene">
+  <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#5f7a99"/>
+        <stop offset="38%" stop-color="#cf9a63"/>
+        <stop offset="68%" stop-color="#e6a94a"/>
+        <stop offset="100%" stop-color="#5a2f14"/>
+      </linearGradient>
+      <radialGradient id="sun" cx="50%" cy="50%" r="50%">
+        <stop offset="0%" stop-color="#fff3d6" stop-opacity="0.95"/>
+        <stop offset="45%" stop-color="#f4c26a" stop-opacity="0.55"/>
+        <stop offset="100%" stop-color="#f4c26a" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#3a2417"/>
+        <stop offset="100%" stop-color="#180d08"/>
+      </linearGradient>
+    </defs>
+
+    <rect x="0" y="0" width="1600" height="900" fill="url(#sky)"/>
+    <circle cx="1150" cy="560" r="230" fill="url(#sun)"/>
+    <circle cx="1150" cy="560" r="70" fill="#fff6e2" opacity="0.9"/>
+
+    <!-- birds -->
+    <g stroke="#2a1710" stroke-width="3" fill="none" opacity="0.55">
+      <path d="M180 110 q10 -10 20 0 q10 -10 20 0"/>
+      <path d="M260 150 q9 -9 18 0 q9 -9 18 0"/>
+      <path d="M1350 140 q9 -9 18 0 q9 -9 18 0"/>
+      <path d="M1420 180 q8 -8 16 0 q8 -8 16 0"/>
+    </g>
+
+    <!-- monument silhouettes -->
+    <g fill="#170c07" opacity="0.9">
+      <rect x="0" y="700" width="1600" height="200"/>
+      <!-- domes cluster -->
+      <path d="M900 700 L900 620 Q900 580 940 580 Q980 580 980 620 L980 700 Z"/>
+      <circle cx="940" cy="575" r="10"/>
+      <path d="M1000 700 L1000 560 Q1000 500 1060 500 Q1120 500 1120 560 L1120 700 Z"/>
+      <circle cx="1060" cy="492" r="14"/>
+      <rect x="1130" y="600" width="18" height="100"/>
+      <circle cx="1139" cy="595" r="8"/>
+      <path d="M1160 700 L1160 610 Q1160 575 1195 575 Q1230 575 1230 610 L1230 700 Z"/>
+      <circle cx="1195" cy="570" r="9"/>
+      <rect x="860" y="630" width="16" height="70"/>
+      <circle cx="868" cy="625" r="7"/>
+      <path d="M1260 700 L1260 640 Q1260 610 1290 610 Q1320 610 1320 640 L1320 700 Z"/>
+      <circle cx="1290" cy="605" r="8"/>
+    </g>
+
+    <!-- ground -->
+    <rect x="0" y="760" width="1600" height="140" fill="url(#ground)"/>
+
+    <!-- distant tiranga flags on right -->
+    <g opacity="0.85">
+      <line x1="1420" y1="560" x2="1420" y2="760" stroke="#2a1710" stroke-width="4"/>
+      <rect x="1420" y="565" width="55" height="12" fill="#e07a2b"/>
+      <rect x="1420" y="577" width="55" height="11" fill="#f6ecd9"/>
+      <rect x="1420" y="588" width="55" height="12" fill="#1f6e4a"/>
+    </g>
+
+    <!-- bunting top corner -->
+    <g id="buntingFlags"></g>
+
+    <!-- foliage corner -->
+    <path d="M1600 0 C1500 40 1420 140 1440 260 C1460 180 1520 100 1600 60 Z" fill="#243318" opacity="0.85"/>
+    <path d="M1600 0 C1560 20 1500 90 1500 180 C1530 110 1580 60 1600 30 Z" fill="#33461f" opacity="0.7"/>
+  </svg>
+</div>
+
+<div class="light-wash"></div>
+<div class="rays"></div>
+<div class="grain"></div>
+<div class="vignette"></div>
+<div class="ambient" id="ambient"></div>
+<div class="confetti-layer" id="confettiLayer"></div>
+
+<div class="wrap">
+  <div class="hero">
+
+    <!-- ===== FLAG STAGE ===== -->
+    <div class="flag-stage" id="flagStage" tabindex="0" aria-label="Wave the flag">
+      <svg viewBox="0 0 640 420" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="softshadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#000" flood-opacity="0.35"/>
+          </filter>
+        </defs>
+        <!-- pole -->
+        <rect x="36" y="14" width="8" height="392" rx="3" fill="#8a6b3a"/>
+        <rect x="34" y="12" width="12" height="12" rx="2" fill="#d8a34a"/>
+        <circle cx="40" cy="10" r="9" fill="#f4d78a" stroke="#8a6b3a" stroke-width="2"/>
+        <!-- flag stripes drawn/updated by JS -->
+        <g filter="url(#softshadow)">
+          <path id="stripeTop" fill="#e07a2b"></path>
+          <path id="stripeMid" fill="#f6ecd9"></path>
+          <path id="stripeBot" fill="#1f6e4a"></path>
+        </g>
+        <!-- ashoka chakra -->
+        <g id="chakraGroup">
+          <circle r="22" fill="none" stroke="#1c2b52" stroke-width="2.5"/>
+          <circle r="3" fill="#1c2b52"/>
+          <g id="spokes" stroke="#1c2b52" stroke-width="1.4"></g>
+        </g>
+      </svg>
+      <div class="fx-layer" id="fxLayer"></div>
+      <div class="stage-hint">
+        <svg viewBox="0 0 24 24"><path d="M12 3a4 4 0 00-4 4v5a4 4 0 008 0V7a4 4 0 00-4-4zm7 8a1 1 0 00-2 0 5 5 0 01-10 0 1 1 0 00-2 0 7 7 0 006 6.92V20H8a1 1 0 000 2h8a1 1 0 000-2h-3v-2.08A7 7 0 0019 11z"/></svg>
+        Press <b>SPACE</b> or click the flag for a patriotic experience
+      </div>
+    </div>
+
+    <!-- ===== CONTENT ===== -->
+    <div class="content">
+      <div class="eyebrow-line">INDEPENDENCE SPECIAL</div>
+      <h1><span class="num">15</span> <span class="aug">AUGUST</span><span class="rest">SPECIAL SONGS</span></h1>
+      <div class="subtitle">Curated by <span class="name">Ravi Kumar</span></div>
+      <div class="divider">
+        <span></span>
+        <svg class="chakra-mini" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="#1c2b52" stroke-width="1.6"/><circle cx="12" cy="12" r="1.6" fill="#1c2b52"/></svg>
+        <span class="right"></span>
+      </div>
+      <div class="badge">15 AUGUST &middot; INDEPENDENCE SPECIAL &nbsp;🇮🇳</div>
+      <div class="quote-box"><div id="quote"></div></div>
+    </div>
+
+  </div>
+
+  <footer class="spacer"></footer>
+</div>
+
+<div class="player" id="player">
+  <div class="player-top">
+    <div class="disc-thumb"></div>
+    <div class="track-info">
+      <div class="track-name-wrap"><span id="track-name">Loading playlist…</span></div>
+      <div class="track-sub">15 AUGUST SPECIAL PLAYLIST &middot; CURATED BY RAVI KUMAR</div>
+    </div>
+    <div class="controls">
+      <button id="prevBtn" aria-label="Previous"><svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg></button>
+      <button id="playPause" aria-label="Play/Pause">
+        <svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        <svg id="pauseIcon" viewBox="0 0 24 24" style="display:none"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+      </button>
+      <button id="nextBtn" aria-label="Next"><svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zm-9.5 6L15 6v12z"/></svg></button>
+    </div>
+  </div>
+  <div class="progress-row">
+    <span class="time" id="curTime">0:00</span>
+    <div class="progress-track" id="progressTrack"><div id="progress-fill"></div></div>
+    <span class="time" id="durTime">0:00</span>
+  </div>
+  <div class="status-line" id="statusLine">tap play to begin &middot; 15 august special playlist</div>
+</div>
+
+<div id="yt-player-holder"><div id="yt-player"></div></div>
+
+<script>
+/* ===================== Waving flag (canvas-style physics via SVG path) ===================== */
+const startX = 60, endX = 600, steps = 16, stripeH = 76.6, topBase = 63;
+const stripeIds = ['stripeTop','stripeMid','stripeBot'];
+let amp = 6, targetAmp = 6, t = 0;
+
+function buildStripePath(index, time){
+  const baseYTop = topBase + index*stripeH;
+  let topPts = [], botPts = [];
+  for(let i=0;i<=steps;i++){
+    const x = startX + (endX-startX)*(i/steps);
+    const damp = i/steps;
+    const w1 = Math.sin((x*0.022) + time*2.1 + index*0.55) * amp * damp;
+    const w2 = Math.sin(((x-14)*0.022) + time*2.1 + index*0.55) * amp * damp;
+    topPts.push(x.toFixed(1)+','+(baseYTop + w1).toFixed(1));
+    botPts.push(x.toFixed(1)+','+(baseYTop + stripeH + w2).toFixed(1));
+  }
+  return 'M ' + topPts.join(' L ') + ' L ' + botPts.reverse().join(' L ') + ' Z';
+}
+
+function localWave(x, index, time){
+  const damp = (x-startX)/(endX-startX);
+  return Math.sin((x*0.022) + time*2.1 + index*0.55) * amp * damp;
+}
+
+const chakraGroup = document.getElementById('chakraGroup');
+const chakraX = 150, chakraY = topBase + stripeH*1.5;
+
+function animateFlag(now){
+  t = now/1000;
+  stripeIds.forEach((id, i)=>{
+    document.getElementById(id).setAttribute('d', buildStripePath(i, t));
+  });
+  const lw = localWave(chakraX, 1, t);
+  chakraGroup.setAttribute('transform', `translate(${chakraX}, ${chakraY + lw}) rotate(${lw*0.4})`);
+  amp += (targetAmp - amp) * 0.04;
+  if(amp > 6.4) targetAmp = 6;
+  requestAnimationFrame(animateFlag);
+}
+requestAnimationFrame(animateFlag);
+
+/* chakra spokes */
+const spokes = document.getElementById('spokes');
+for(let i=0;i<24;i++){
+  const ang = (i/24) * Math.PI * 2;
+  const x2 = Math.cos(ang)*22, y2 = Math.sin(ang)*22;
+  const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+  line.setAttribute('x1','0'); line.setAttribute('y1','0');
+  line.setAttribute('x2', x2.toFixed(1)); line.setAttribute('y2', y2.toFixed(1));
+  spokes.appendChild(line);
+}
+
+/* bunting corner */
+const buntingFlags = document.getElementById('buntingFlags');
+const buntingColors = ['#e07a2b','#f6ecd9','#1f6e4a'];
+for(let i=0;i<10;i++){
+  const x = 1600 - i * 28;
+  const y = 20 + i*3;
+  const tri = document.createElementNS('http://www.w3.org/2000/svg','path');
+  tri.setAttribute('d', `M${x-9} ${y} L${x+9} ${y} L${x} ${y+16} Z`);
+  tri.setAttribute('fill', buntingColors[i%3]);
+  tri.setAttribute('opacity','0.85');
+  buntingFlags.appendChild(tri);
+}
+
+/* ===================== Quotes ===================== */
+const quotes = [
+  {q:"आओ झुककर सलाम करें उन वीरों को, जिनकी वजह से इस तिरंगे में जान है।", t:"श्रद्धांजलि"},
+  {q:"आज़ादी की वो सुबह, जब पूरे मोहल्ले में तिरंगा एक साथ लहराता था.", t:"15 अगस्त"},
+  {q:"स्कूल की परेड में मिली मिठाई का स्वाद आज भी याद है.", t:"बचपन की परेड"},
+  {q:"छत पर पतंग और नीचे गली में देशभक्ति के गाने — वही असली त्योहार था.", t:"छत की शाम"},
+  {q:"रेडियो पे बजते देशभक्ति गीत सुनकर रोंगटे खड़े हो जाते थे.", t:"राष्ट्रगान का पल"},
+  {q:"पुराने फोटो में दादा जी हाथ में झंडा लिए मुस्कुरा रहे हैं.", t:"पुरानी तस्वीर"},
+  {q:"किशोर दा की आवाज़ में देश के लिए वो प्यार आज भी दिल में उतरता है.", t:"किशोर कुमार"},
+  {q:"हर साल यही उम्मीद — देश और भी आगे बढ़े, और हम भी.", t:"नई उम्मीद"}
+];
+let qi = 0;
+const quoteEl = document.getElementById('quote');
+function showQuote(i){
+  quoteEl.classList.remove('show');
+  setTimeout(()=>{
+    quoteEl.innerHTML = '&ldquo; ' + quotes[i].q + ' &rdquo;<span id="quote-tag">— ' + quotes[i].t + '</span>';
+    quoteEl.classList.add('show');
+  }, 300);
+}
+showQuote(qi);
+setInterval(()=>{ qi = (qi+1) % quotes.length; showQuote(qi); }, 5000);
+
+/* ===================== Ambient petals + chakra motes ===================== */
+const ambientHolder = document.getElementById('ambient');
+const petalColors = ['#e07a2b','#f6ecd9'];
+for(let i=0;i<20;i++){
+  const p = document.createElement('div');
+  p.className = 'petal';
+  p.style.background = petalColors[i%2];
+  p.style.left = Math.random()*100 + 'vw';
+  p.style.animationDelay = (Math.random()*14) + 's';
+  p.style.animationDuration = (10 + Math.random()*9) + 's';
+  const s = 8 + Math.random()*6;
+  p.style.width = s+'px'; p.style.height = (s*1.4)+'px';
+  ambientHolder.appendChild(p);
+}
+for(let i=0;i<10;i++){
+  const c = document.createElement('div');
+  c.className = 'chakramote';
+  const s = 10 + Math.random()*10;
+  c.style.width = s+'px'; c.style.height = s+'px';
+  c.style.left = Math.random()*100 + 'vw';
+  c.style.animationDelay = (Math.random()*14) + 's';
+  c.style.animationDuration = (12 + Math.random()*8) + 's';
+  ambientHolder.appendChild(c);
+}
+
+/* ===================== Interaction: flag click / space ===================== */
+const flagStage = document.getElementById('flagStage');
+const fxLayer = document.getElementById('fxLayer');
+let audioCtx;
+
+function playPatrioticSwell(){
+  try{
+    if(!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const now = audioCtx.currentTime;
+    const freqs = [261.6, 329.6, 392.0];
+    freqs.forEach((f,i)=>{
+      const osc = audioCtx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.value = f;
+      const gain = audioCtx.createGain();
+      gain.gain.setValueAtTime(0, now);
+      gain.gain.linearRampToValueAtTime(0.09, now + 0.15 + i*0.05);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 1.4);
+      osc.connect(gain).connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 1.5);
+    });
+  }catch(e){}
+}
+
+function spawnRipple(){
+  const r = document.createElement('div');
+  r.className = 'ripple go';
+  fxLayer.appendChild(r);
+  setTimeout(()=>r.remove(), 1300);
+}
+
+function spawnBurst(){
+  const layer = document.getElementById('confettiLayer');
+  const rect = flagStage.getBoundingClientRect();
+  const cx = rect.left + rect.width*0.45;
+  const cy = rect.top + rect.height*0.35;
+  const colors = ['#e07a2b','#f6ecd9','#1f6e4a'];
+  for(let i=0;i<26;i++){
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = (cx + (Math.random()-0.5)*260) + 'px';
+    c.style.top = (cy + (Math.random()-0.5)*80) + 'px';
+    c.style.background = colors[i%3];
+    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    c.style.animationDuration = (1.6 + Math.random()*1.4) + 's';
+    layer.appendChild(c);
+    setTimeout(()=>c.remove(), 3400);
+  }
+  const symbols = ['♪','♫','♬'];
+  for(let i=0;i<6;i++){
+    const n = document.createElement('div');
+    n.className = 'note';
+    n.textContent = symbols[i%symbols.length];
+    n.style.left = (cx + (Math.random()-0.5)*160) + 'px';
+    n.style.top = (cy + (Math.random()-0.5)*40) + 'px';
+    n.style.color = i%3===0 ? '#f4a94a' : (i%3===1 ? '#f6ecd9' : '#2f8f5f');
+    n.style.animationDelay = (i*0.06)+'s';
+    layer.appendChild(n);
+    setTimeout(()=>n.remove(), 2200);
+  }
+}
+
+function triggerNostalgia(){
+  playPatrioticSwell();
+  spawnRipple();
+  spawnBurst();
+  targetAmp = 20;
+  setTimeout(()=>{ targetAmp = 6; }, 900);
+  qi = Math.floor(Math.random()*quotes.length);
+  showQuote(qi);
+}
+
+flagStage.addEventListener('click', triggerNostalgia);
+flagStage.addEventListener('keydown', (e)=>{ if(e.key === 'Enter'){ e.preventDefault(); triggerNostalgia(); } });
+window.addEventListener('keydown', (e)=>{
+  if(e.code === 'Space' && !e.repeat && e.target === document.body){
+    e.preventDefault();
+    triggerNostalgia();
+  }
+});
+window.addEventListener('load', ()=> setTimeout(triggerNostalgia, 500));
+
+/* ===================== YouTube playlist player ===================== */
+const PLAYLIST_ID = 'PL0Z67tlyTaWo-c_QyUnhsoa4cUwceCmRu';
+let ytPlayer, ytReady = false, isPlaying = false, progressTimer;
+
+const tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+document.body.appendChild(tag);
+
+window.onYouTubeIframeAPIReady = function(){
+  ytPlayer = new YT.Player('yt-player', {
+    height:'1', width:'1',
+    playerVars:{ listType:'playlist', list: PLAYLIST_ID, autoplay:0, controls:0 },
+    events:{ onReady: onPlayerReady, onStateChange: onPlayerStateChange }
+  });
+};
+
+function onPlayerReady(){
+  ytReady = true;
+  document.getElementById('statusLine').textContent = 'tap play to begin · 15 august special playlist';
+}
+
+function fmtTime(s){
+  if(!isFinite(s) || s < 0) s = 0;
+  const m = Math.floor(s/60), sec = Math.floor(s%60);
+  return m + ':' + (sec<10?'0':'') + sec;
+}
+
+function onPlayerStateChange(e){
+  const playerEl = document.getElementById('player');
+  if(e.data === YT.PlayerState.PLAYING){
+    isPlaying = true;
+    playerEl.classList.add('is-playing');
+    document.getElementById('playIcon').style.display='none';
+    document.getElementById('pauseIcon').style.display='inline';
+    updateTrackName();
+    document.getElementById('statusLine').textContent = 'now playing · 15 august special playlist';
+    startProgressLoop();
+  } else if(e.data === YT.PlayerState.PAUSED){
+    isPlaying = false;
+    playerEl.classList.remove('is-playing');
+    document.getElementById('playIcon').style.display='inline';
+    document.getElementById('pauseIcon').style.display='none';
+    stopProgressLoop();
+  } else if(e.data === YT.PlayerState.ENDED){
+    stopProgressLoop();
+  } else if(e.data === YT.PlayerState.CUED){
+    updateTrackName();
+  }
+}
+
+function updateTrackName(){
+  try{
+    const data = ytPlayer.getVideoData();
+    document.getElementById('track-name').textContent = data && data.title ? data.title : '15 August Special — playing…';
+  }catch(err){}
+}
+
+function startProgressLoop(){
+  stopProgressLoop();
+  progressTimer = setInterval(()=>{
+    if(!ytPlayer || !ytPlayer.getCurrentTime) return;
+    const cur = ytPlayer.getCurrentTime() || 0;
+    const dur = ytPlayer.getDuration() || 0;
+    document.getElementById('progress-fill').style.width = (dur ? (cur/dur*100) : 0) + '%';
+    document.getElementById('curTime').textContent = fmtTime(cur);
+    document.getElementById('durTime').textContent = fmtTime(dur);
+  }, 500);
+}
+function stopProgressLoop(){ clearInterval(progressTimer); }
+
+document.getElementById('playPause').addEventListener('click', ()=>{
+  if(!ytReady) return;
+  if(isPlaying){ ytPlayer.pauseVideo(); } else { ytPlayer.playVideo(); }
+});
+document.getElementById('nextBtn').addEventListener('click', ()=>{
+  if(!ytReady) return;
+  ytPlayer.nextVideo();
+  setTimeout(updateTrackName, 600);
+});
+document.getElementById('prevBtn').addEventListener('click', ()=>{
+  if(!ytReady) return;
+  ytPlayer.previousVideo();
+  setTimeout(updateTrackName, 600);
+});
+document.getElementById('progressTrack').addEventListener('click', (e)=>{
+  if(!ytReady || !ytPlayer.getDuration) return;
+  const rect = e.currentTarget.getBoundingClientRect();
+  const pct = (e.clientX - rect.left) / rect.width;
+  const dur = ytPlayer.getDuration() || 0;
+  ytPlayer.seekTo(dur * pct, true);
+});
+</script>
+</body>
+</html>
